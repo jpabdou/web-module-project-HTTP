@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-
 import axios from 'axios';
 
 const EditMovieForm = (props) => {
 	const { push } = useHistory();
-
+	let {id} = useParams()
 	const { setMovies } = props;
 	const [movie, setMovie] = useState({
 		title:"",
@@ -15,6 +14,17 @@ const EditMovieForm = (props) => {
 		metascore: 0,
 		description: ""
 	});
+
+	const getData = () =>{
+		axios.get(`http://localhost:9000/api/movies/${id}`,)
+		.then(res=>{
+			setMovie(res.data)
+		})
+		.catch(err=>{
+			console.log(err);
+		})
+	}
+	useEffect(()=>{getData()},[])
 	
 	const handleChange = (e) => {
         setMovie({
@@ -69,7 +79,7 @@ const EditMovieForm = (props) => {
 				</div>
 				<div className="modal-footer">			    
 					<input type="submit" className="btn btn-info" value="Save"/>
-					<Link to={`/movies/1`}><input type="button" className="btn btn-default" value="Cancel"/></Link>
+					<Link to={`/movies/${id}`}><input type="button" className="btn btn-default" value="Cancel"/></Link>
 				</div>
 			</form>
 		</div>
