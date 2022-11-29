@@ -24,7 +24,7 @@ const Movie = (props) => {
     const deleteMovie = ()=>{
         axios.delete(`http://localhost:9000/api/movies/${id}`)
         .then(res=>{
-            props.deleteMovie(id);
+            props.deleteMovie(id)
             push("/movies")
         })
         .catch(err=>{
@@ -61,7 +61,7 @@ const Movie = (props) => {
                         </section>
                         
                         <section>
-                            <span className="m-2 btn btn-dark">Favorite</span>
+                            <span onClick={()=>addToFavorites(movie)} className="m-2 btn btn-dark">Favorite</span>
                             <Link to={`/movies/edit/${movie.id}`} className="m-2 btn btn-success">Edit</Link>
                             <span className="delete"><input type="button" onClick={()=>{deleteMovie()}} className="m-2 btn btn-danger" value="Delete"/></span>
                         </section>
